@@ -403,11 +403,22 @@ function showUI(state) {
 }
 
 // =============================
+// FUNCIÓN PARA REINICIAR BOTÓN START
+// =============================
+function resetStartButton() {
+  if (startScanCta) {
+    startScanCta.disabled = false;
+    startScanCta.style.opacity = '1';
+  }
+}
+
+// =============================
 // BOTONES PRINCIPALES
 // =============================
 btnCancelScan?.addEventListener('click', () => {
   stopScanner();
   resetEvidence(); resetQuestions();
+  resetStartButton();
   showUI('scanner');
   cameraMsg?.classList.add('active'); // volver a PLAY
 });
@@ -585,6 +596,7 @@ formSinNovedad?.addEventListener('submit', async e => {
   showSaving('Guardando…');
   await sendToFirebase(payload);
   formSinNovedad.reset();
+  resetStartButton();
   showUI('scanner'); cameraMsg?.classList.add('active');
 });
 
@@ -608,6 +620,7 @@ formConNovedad?.addEventListener('submit', async e => {
   showSaving('Saving…');
   await sendToFirebase(payload);
   formConNovedad.reset(); resetEvidence(); /* no resetQuestions() since questions are removed */
+  resetStartButton();
   showUI('scanner'); cameraMsg?.classList.add('active');
 });
 
